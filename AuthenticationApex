@@ -15,7 +15,7 @@ Public class AuthenticationHttp
         String Token = '';        //Enter Your Token here
         String password = '';     //Enter Your Password here
         
-        String OAutAuthURL = 'https://login.salesforce.com/services/oauth2/token';  //This is the Organization user for authentication
+        String OAutAuthURL = 'https://test.salesforce.com/services/oauth2/token';  //This is the Organization user for authentication
         HttpRequest req = new HttpRequest();
         req.setEndpoint(OAutAuthURL);
         req.setMethod('POST');
