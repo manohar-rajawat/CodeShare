@@ -1,0 +1,29 @@
+/*
+  Manohar Singh Rajawat Github 2020
+  Salesforce Authentication
+  #The user needs to put the required information in the class like credentials
+  #Then call the AuthenticationHttp.authenticateSF() Method from any class this will return the access_Token + instance_url
+*/
+
+Public class AuthenticationHttp 
+{	
+    Public Static String authenticateSF()
+    {
+        String clientId = '';     //Enter Your Client Id here
+        String clientSecret = ''; //Enter Your Client Secret Key here
+        String username = '';     //Enter Your UserName here
+        String Token = '';        //Enter Your Token here
+        String password = '';     //Enter Your Password here
+        
+        String OAutAuthURL = 'https://login.salesforce.com/services/oauth2/token';  //This is the Organization user for authentication
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(OAutAuthURL);
+        req.setMethod('POST');
+        req.setHeader('Content-Type','application/x-www-form-urlencoded');
+        String Body = 'grant_type=password&client_id='+clientId+'&client_secret='+clientSecret+'&username='+username+'&password='+password+Token;
+        req.setBody(Body);
+        Http http = new Http();
+        HttpResponse response = http.send(req);
+        return response.getBody();
+    }
+}
