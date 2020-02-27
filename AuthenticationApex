@@ -42,7 +42,7 @@ Public class AuthenticationHttp
         Http http = new Http();
         HttpResponse response = http.send(req);
         String responseBody = response.getBody();
-        SalesforceTokens tokens = (SalesforceTokens)JSON.deserializeStrict(responseBody,SalesforceTokens.class); //This is the deserializeStrict in which we are coverting date to class.
+        SalesforceTokens tokens = (SalesforceTokens)JSON.deserializeStrict(responseBody,SalesforceTokens.class); //This is the deserializeStrict in which we are converting data to class.
         return tokens;
     }
 }
