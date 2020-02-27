@@ -2,12 +2,29 @@
   Manohar Singh Rajawat Github 2020
   Salesforce Authentication
   #The user needs to put the required information in the class like credentials
-  #Then call the AuthenticationHttp.authenticateSF() Method from any class this will return the access_Token + instance_url
+  #Then call the AuthenticationHttp.SalesforceTokens tokens = AuthenticationHttp.authenticateSF() Method from any class this will return the access_Token + instance_url
+  #Then User can use below values
+  #1. tokens.access_token //This will return the token string
+  #2. tokens.instance_url //This will return the instance url string
+  #3. tokens.id           //This will return the id string
+  #4. tokens.token_type   //This will return the token type string
+  $5. tokens.issued_at    //This will return the issued time string
+  #6. tokens.signature    //This will return the signature string
 */
 
 Public class AuthenticationHttp 
 {	
-    Public Static String authenticateSF()
+    public class SalesforceTokens 
+    {
+        public String access_token;
+        public String instance_url;
+        public String id;
+        public String token_type;
+        public String issued_at;
+		    public String signature;
+    }
+    
+    Public Static AuthenticationHttp.SalesforceTokens authenticateSF()
     {
         String clientId = '';     //Enter Your Client Id here
         String clientSecret = ''; //Enter Your Client Secret Key here
@@ -15,7 +32,7 @@ Public class AuthenticationHttp
         String Token = '';        //Enter Your Token here
         String password = '';     //Enter Your Password here
         
-        String OAutAuthURL = 'https://test.salesforce.com/services/oauth2/token';  //This is the Organization user for authentication
+        String OAutAuthURL = 'https://login.salesforce.com/services/oauth2/token';  //This is the Organization user for authentication
         HttpRequest req = new HttpRequest();
         req.setEndpoint(OAutAuthURL);
         req.setMethod('POST');
@@ -24,6 +41,8 @@ Public class AuthenticationHttp
         req.setBody(Body);
         Http http = new Http();
         HttpResponse response = http.send(req);
-        return response.getBody();
+        String responseBody = response.getBody();
+        SalesforceTokens tokens = (SalesforceTokens)JSON.deserializeStrict(responseBody,SalesforceTokens.class); //This is the deserializeStrict in which we are coverting date to class.
+        return tokens;
     }
 }
